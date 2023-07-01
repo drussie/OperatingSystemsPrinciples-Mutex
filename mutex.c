@@ -1,3 +1,13 @@
+/*
+ *   Name: Marcos Ondruska
+ *   Panther ID: 2685885
+ *
+ *   Usage: Application runs two competing threads to update a shared glabal counter variable for
+ *   a max of 2000000 updates to each thread. Thread 1 has a bonus of 100 added every time the counter
+ *   variable is divisible by 100. The current value of the counter is also printed at the end of the
+ *   remainder for each individual thread.
+ */
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <pthread.h>
