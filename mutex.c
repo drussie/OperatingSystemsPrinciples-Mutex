@@ -30,8 +30,8 @@ pthread_mutex_t mutex;
 void *thread1()
 {
     int i = 0;
-    int bonus = 0;
-    int currentValue = 0;
+    int bonus = 0;        // COunt the number of bonuses
+    int currentValue = 0; // Store the current value of the counter at time of completion
 
     while (i < MAX_UPDATES)
     {
@@ -39,16 +39,17 @@ void *thread1()
         if (pthread_mutex_trylock(&mutex) == 0)
         {
             /* Critical section */
-            if ((counter->value) < 4000000)
+            if ((counter->value) < 4000000) // update only if the counter is less than 4000000
             {
+                // Add bonus values
                 if ((counter->value % 100) == 0)
                 {
                     bonus++;
                     counter->value += 100;
                 }
 
-                counter->value++;
-                currentValue = counter->value;
+                counter->value++;              // increment the counter by 1
+                currentValue = counter->value; // store the current value of the counter
             }
             i++;
             /* Exit section */
@@ -67,7 +68,7 @@ void *thread1()
 void *thread2()
 {
     int i = 0;
-    int currentValue = 0;
+    int currentValue = 0; // Store the current value of the counter at time of completion
 
     while (i < MAX_UPDATES)
     {
@@ -75,10 +76,10 @@ void *thread2()
         if (pthread_mutex_trylock(&mutex) == 0)
         {
             /* Critical section */
-            if ((counter->value) < 4000000)
+            if ((counter->value) < 4000000) // update only if the counter is less than 4000000
             {
-                counter->value++;
-                currentValue = counter->value;
+                counter->value++;              // increment the counter by 1
+                currentValue = counter->value; // store the current value of the counter
             }
             i++;
             /* Exit section */
