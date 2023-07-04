@@ -1,5 +1,5 @@
-mutex: mutex.o
-	cc -o mutex mutex.c -lpthread
+marcosondruska: marcosondruska.o
+	cc -o marcosondruska marcosondruska.c -lpthread
 
 clean:
 	rm *.o    
