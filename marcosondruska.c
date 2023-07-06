@@ -30,11 +30,12 @@ pthread_mutex_t mutex;
 void *thread1()
 {
     int i = 0;
-    int bonus = 0;        // COunt the number of bonuses
+    int bonus = 0;        // Count the number of bonuses
     int currentValue = 0; // Store the current value of the counter at time of completion
 
     while (i < MAX_UPDATES)
     {
+        // i++;
         /* Entry section */
         if (pthread_mutex_trylock(&mutex) == 0)
         {
@@ -46,17 +47,26 @@ void *thread1()
                 {
                     bonus++;
                     counter->value += 100;
+                    // currentValue = counter->value; // store the current value of the counter
+                    i += 100;
                 }
-
-                counter->value++;              // increment the counter by 1
+                else
+                {
+                    // i++;
+                    counter->value++; // increment the counter by 1
+                                      // currentValue = counter->value; // store the current value of the counter
+                    // i++;
+                }
+                // i++;
                 currentValue = counter->value; // store the current value of the counter
             }
-            i++;
+
             /* Exit section */
             pthread_mutex_unlock(&mutex);
         }
     }
     /* Remainder section */
+
     printf("I'm thread1, I did %d updates and I got the bonus %d times, counter = %d\n",
            i,
            bonus,
@@ -78,10 +88,11 @@ void *thread2()
             /* Critical section */
             if ((counter->value) < 4000000) // update only if the counter is less than 4000000
             {
-                counter->value++;              // increment the counter by 1
-                currentValue = counter->value; // store the current value of the counter
+                counter->value++; // increment the counter by 1
+                // currentValue = counter->value; // store the current value of the counter
             }
             i++;
+            currentValue = counter->value; // store the current value of the counter
             /* Exit section */
             pthread_mutex_unlock(&mutex);
         }
