@@ -35,9 +35,8 @@ void *thread1()
 
     while (i < MAX_UPDATES)
     {
-        // i++;
         /* Entry section */
-        if (pthread_mutex_trylock(&mutex) == 0)
+        if (pthread_mutex_lock(&mutex) == 0)
         {
             /* Critical section */
             if ((counter->value) < 4000000) // update only if the counter is less than 4000000
@@ -47,17 +46,13 @@ void *thread1()
                 {
                     bonus++;
                     counter->value += 100;
-                    // currentValue = counter->value; // store the current value of the counter
                     i += 100;
                 }
                 else
                 {
-                    // i++;
                     counter->value++; // increment the counter by 1
-                                      // currentValue = counter->value; // store the current value of the counter
-                    // i++;
+                    i++;
                 }
-                // i++;
                 currentValue = counter->value; // store the current value of the counter
             }
 
@@ -89,10 +84,10 @@ void *thread2()
             if ((counter->value) < 4000000) // update only if the counter is less than 4000000
             {
                 counter->value++; // increment the counter by 1
-                // currentValue = counter->value; // store the current value of the counter
             }
             i++;
             currentValue = counter->value; // store the current value of the counter
+
             /* Exit section */
             pthread_mutex_unlock(&mutex);
         }
